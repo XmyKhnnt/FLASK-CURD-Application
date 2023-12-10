@@ -1,0 +1,76 @@
+{% extends "layouts/base.html" %}
+
+
+{% block content %}
+
+<div class="container">
+    <h3 class="text-center mb-5">Lab Activity 9</h3>
+    <div class="card">
+        <div class="card-body">
+            <h6>Objectives</h6>
+            <p>Create a web page with separate forms, and corresponding servlets, to perform each of the following
+                actions:
+            </p>
+
+            <ol>
+                <li>Accept a roll number, and display the following data about the student: name, department, and all
+                    courses taken, in tabular form: list the course id, title, credits, and grade (show a blank if the
+                    grade is null).
+                </li>
+                <li>
+                    Accept a word, and find all courses whose title contains that word
+                </li>
+                <li>
+                    Show all students with two or more fail grades; no need to show the courses they have failed, and I
+                    don't care if they passed the course subsequently.
+                </li>
+                <li>
+                    Take a roll number, name and department name, and insert a new student record with tot_creds set to
+                    0. Make sure you catch exceptions and report them (and test it with an incorrect department name, to
+                    see what happens when a foreign key constraint is violated, and similarly with a duplicate roll
+                    number, to see what happens when a primary key constraint is violated). Make sure also to close
+                    connections, even if there is an exception.
+                </li>
+
+            </ol>
+        </div>
+    </div>
+    <br>
+    <div class="card">
+        <div class="card-body">
+
+            <div class="d-flex justify-content-center align-items-center">
+
+                <div class="row">
+                    <div class="col mb-2">
+                        <a href="{{url_for('main.students')}}" class="btn"><i class="animation"></i>Students<i
+                                class="animation"></i></a>
+                    </div>
+
+                    <div class="col mb-2">
+                        <a href="{{url_for('main.fails')}}" class="btn"><i class="animation"></i>Students With
+                            Fails<i class="animation"></i></a>
+                    </div>
+
+                    <div class="col mb-2">
+                        <a href="{{url_for('main.students-details')}}" class="btn"><i class="animation"></i>Student
+                            Details<i class="animation"></i></a>
+                    </div>
+                    <div class="col mb-2">
+                        <a href="{{url_for('main.courses')}}" class="btn"><i class="animation"></i>
+                            Courses
+                            <i class="animation"></i>
+                        </a>
+                    </div>
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+    </div>
+</div>
+
+{% endblock content %}

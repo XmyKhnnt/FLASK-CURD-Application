@@ -1,0 +1,106 @@
+{% extends "layouts/base.html" %}
+
+
+{% block content %}
+
+<br>
+<div class="container">
+    {% for error in errors %}
+
+    <div class="alert alert-warning d-flex align-items-center" role="alert">
+        <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Warning:">
+            <use xlink:href="#exclamation-triangle-fill" />
+        </svg>
+        <div>
+            {{error}}
+        </div>
+    </div>
+    {% endfor %}
+
+
+    {% if request.args.get('success') == 'True' %}
+
+    <div class="alert alert-success d-flex align-items-center" role="alert">
+        <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:">
+            <use xlink:href="#check-circle-fill" />
+        </svg>
+        <div>
+            {{request.args.get('msg')}}
+        </div>
+    </div>
+    {% endif %}
+
+
+    <div class="card">
+        <div class="card-header">
+            <h3>Students with failures </h3>
+
+
+        </div>
+        <br>
+
+        <div class="card">
+            <div class="card p-3">
+
+
+
+
+                <div class="mx-auto row w-100">
+                    <form action="" class="">
+                        <div class="form mb-2">
+
+                            <i class="fa fa-search"></i>
+                            <input type="text" class="form-control form-input w-100" name="q"
+                                placeholder="Search title...">
+
+                        </div>
+                    </form>
+
+                </div>
+
+
+
+
+            </div>
+        </div>
+        <br>
+
+
+        <div class="card-body">
+            <table class="table table-striped table-hover">
+                <thead>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Department</th>
+                    <th>Total Credits</th>
+                </thead>
+                <tbody>
+                    {% for fail  in fails %}
+                    <tr>
+                        <td>{{fail[0]}}</td>
+                        <td>{{fail[1]}}</td>
+                        <td>{{fail[3]}}</td>
+                        <td>{{fail[4]}}</td>
+
+
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+</div>
+
+
+
+
+
+{% endblock content %}
+
+{% block extra_js %}
+
+
+<!-- <script src="{{ url_for('static', filename='js/remove_querystring.js') }}"></script> -->
+{% endblock extra_js %}

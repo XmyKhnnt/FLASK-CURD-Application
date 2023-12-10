@@ -1,0 +1,185 @@
+{% extends "layouts/base.html" %}
+
+
+{% block content %}
+
+<br>
+<div class="container">
+    {% for error in errors %}
+
+    <div class="alert alert-warning d-flex align-items-center" role="alert">
+        <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Warning:">
+            <use xlink:href="#exclamation-triangle-fill" />
+        </svg>
+        <div>
+            {{error}}
+        </div>
+    </div>
+    {% endfor %}
+
+
+    {% if request.args.get('success') == 'True' %}
+
+    <div class="alert alert-success d-flex align-items-center" role="alert">
+        <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:">
+            <use xlink:href="#check-circle-fill" />
+        </svg>
+        <div>
+            {{request.args.get('msg')}}
+        </div>
+    </div>
+    {% endif %}
+
+
+    <div class="card">
+        <div class="card-header">
+            <h3>Students</h3>
+
+
+        </div>
+        <br>
+        <div class="container">
+            <div class="alert alert-primary d-flex align-items-center" role="alert">
+                <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Info:">
+                    <use xlink:href="#info-fill" />
+                </svg>
+                <div>
+                    The default query is 'SELECT * FROM student WHERE tot_cred = 0'.
+                    But when searching for a student, all the details will be shown without
+                    'WHERE tot_cred = 0' condition .
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card p-3">
+
+
+
+
+                <div class="mx-auto row w-100">
+                    <form action="" class="col-md-9">
+                        <div class="form mb-2">
+
+                            <i class="fa fa-search"></i>
+                            <input type="text" class="form-control form-input w-100" name="q"
+                                placeholder="Search name...">
+
+                        </div>
+                    </form>
+
+                    <div class="col-sm-auto  col-md-2">
+                        <a data-bs-toggle="modal" data-bs-target="#newST" class="btn btn-block w-100">
+                            <i class="animation"></i>New Student<i class="animation"></i>
+                        </a>
+                    </div>
+                </div>
+
+
+
+
+            </div>
+        </div>
+        <br>
+
+
+        <div class="card-body">
+            <table class="table table-striped table-hover">
+                <thead>
+                    <th>Roll No.</th>
+                    <th>Name</th>
+                    <th>Department</th>
+                    <th>Total Credits</th>
+                    <th></th>
+                </thead>
+                <tbody>
+                    {% for student in students %}
+                    <tr>
+                        <td>{{student[0]}}</td>
+                        <td>{{student[1]}}</td>
+                        <td>{{student[2]}}</td>
+                        <td>{{student[3]}}</td>
+                        <td>
+                            <a href="{{url_for('main.students-details')}}?q={{student[0]}}" type="button"
+                                class=" btn-primary btn-sm text-decoration-none" style="background-color: #40B3A2;">
+                                view
+                            </a>
+                        </td>
+
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="newST" tabindex="-1" aria-labelledby="newSTLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+
+            <div class="modal-body">
+                {% for error in errors %}
+
+                <div class="alert alert-warning d-flex align-items-center" role="alert">
+                    <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Warning:">
+                        <use xlink:href="#exclamation-triangle-fill" />
+                    </svg>
+                    <div>
+                        {{error}}
+                    </div>
+                </div>
+                {% endfor %}
+
+                <form action="{{url_for('main.students')}}?m=show" method="POST">
+                    {{ form.csrf_token }}
+                    <div>
+                        {{ form.id.label }}: {{ form.id() }}
+                    </div>
+                    <div>
+                        {{ form.name.label }}: {{ form.name() }}
+                    </div>
+                    <div>
+                        {{ form.dept_name.label }}: {{ form.dept_name() }}
+                    </div>
+                    <br>
+                    <div>
+
+                        <button class="btn w-100" type="submit">
+                            <i class="animation"></i>Add Student<i class="animation"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock content %}
+
+{% block extra_js %}
+<Script>
+
+    var myModal = new bootstrap.Modal(document.getElementById('newST'), {
+        keyboard: false
+    })
+
+    // Check if the query string parameter 'm' is set to 'show'
+    const urlParams = new URLSearchParams(window.location.search);
+    const showParam = urlParams.get('m');
+
+    if (showParam === 'show') {
+        myModal.show();
+    }
+
+</Script>
+
+<script src="{{ url_for('static', filename='js/remove_querystring.js') }}"></script>
+{% endblock extra_js %}
